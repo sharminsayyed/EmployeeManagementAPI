@@ -1,6 +1,9 @@
 
 // solution - architecture for organiziging the projects in vs 
 
+using EmployeeManagement.API.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // here we add dependency injection
@@ -10,6 +13,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//inject    the dbcontext class - so we can se it inside the controller 
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// entity framework migration are used ot create some files in c# class and then execute those files to create the database and tables  in sql server
 
 var app = builder.Build();
 
